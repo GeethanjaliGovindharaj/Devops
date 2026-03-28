@@ -1,19 +1,20 @@
-# Microservices DevOps Implementation
+# Microservices DevOps Implementation (EC2-Based)
 
 ## Overview
-This documentation describes the implementation of a multi-service application using containerization and Kubernetes, including validation and monitoring evidence.
+This documentation describes the implementation of a multi-service application using containerization and an EC2-based deployment approach, including validation, CI evidence, and monitoring evidence.
 
 The implementation covers:
-- Compute provisioning evidence (EC2)
-- Continuous integration evidence (Jenkins)
-- Container image build and local container validation
+- AWS EC2 provisioning and server preparation
+- Container image build and container validation
 - Source control (Git) and repository update
-- Kubernetes cluster provisioning (EKS)
+- CI evidence (Jenkins)
 - Monitoring verification (Prometheus and Grafana)
 
 ---
 
-## Application Endpoints (Local Validation)
+## Application Endpoints (Validation)
+> Endpoints depend on how ports are mapped on your machine/EC2 instance.
+
 - Frontend: `http://localhost:8081`
 - Offer page: `http://localhost:8082`
 - Backend: `http://localhost:5000`
@@ -23,17 +24,16 @@ The implementation covers:
 
 ## Tools and Components
 - AWS EC2 (compute instance provisioning)
-- Jenkins (CI orchestration)
 - Docker (image build, container execution)
 - Git and GitHub (version control)
-- Kubernetes / EKS (orchestration)
+- Jenkins (CI orchestration evidence)
 - Prometheus (metrics collection)
 - Grafana (metrics visualization)
 
 ---
 
 ## 1. EC2 Provisioning Evidence
-This section captures the provisioning steps and security configuration associated with compute setup.
+This section captures provisioning steps and security configuration associated with compute setup.
 
 ### 1.1 Key Pair and Network Settings
 **Evidence**  
@@ -111,7 +111,7 @@ A successful build output is captured.
 
 ---
 
-## 5. Local Container Execution and Validation
+## 5. Container Execution and Validation
 
 ### 5.1 Containers Running
 Containers are started and verified.
@@ -130,11 +130,15 @@ docker run -d --name offerpage -p 8082:8082 offerpage:1.0
 ![Docker containers running](../4.docker%20container%20runnning.jpg.jpeg)
 
 ### 5.2 Frontend Validation
+Frontend is verified in the browser.
+
 **Evidence**  
 ![Frontend on server 1](../5.server1%20frontend.jpg.jpeg)  
 ![Frontend on server 2](../6.server2%20frontend.jpg.jpeg)
 
 ### 5.3 Backend Validation
+Backend service runtime is validated.
+
 **Evidence**  
 ![Backend running](../7.backend%20running.jpg.jpeg)
 
@@ -154,6 +158,8 @@ curl http://localhost:5000/api/products
 ## 6. Source Control (Git) and Repository Update
 
 ### 6.1 Git Repository Status
+Repository status is verified prior to staging.
+
 **Command(s)**
 ```bash
 git status
@@ -163,6 +169,8 @@ git status
 ![Git status](../9.git.jpg.jpeg)
 
 ### 6.2 Stage Changes
+Changes are staged for commit.
+
 **Command(s)**
 ```bash
 git add .
@@ -173,15 +181,19 @@ git add .
 ![Git add (first)](../11.git%20add%20first.jpg.jpeg)
 
 ### 6.3 Commit Changes
+Changes are committed with a meaningful message.
+
 **Command(s)**
 ```bash
-git commit -m "Add Docker and Kubernetes deployment assets"
+git commit -m "Add Docker deployment and monitoring assets"
 ```
 
 **Evidence**  
 ![Commit](../13.commit%20final.jpg.jpeg)
 
 ### 6.4 Push to Remote Repository
+Changes are pushed to the remote repository.
+
 **Command(s)**
 ```bash
 git push origin main
@@ -192,58 +204,36 @@ git push origin main
 
 ---
 
-## 7. Kubernetes Cluster Provisioning (EKS)
+## 7. Monitoring Verification (Prometheus and Grafana)
 
-### 7.1 Enable Kubernetes / EKS Setup
-**Evidence**  
-![Enable Kubernetes](../14.enable%20kubernetes.jpg.jpeg)
+### 7.1 Prometheus Access and Visibility
+Prometheus instance availability is captured.
 
-### 7.2 Cluster Configuration
-**Evidence**  
-![Cluster form](../15.cluster%20form.jpg.jpeg)  
-![Cluster form (additional)](../cluster%20form.jpg.jpeg)
-
-### 7.3 Cluster Creation and Availability
-**Evidence**  
-![Cluster created](../16.cluster.jpg.jpeg)  
-![Cluster ready](../17.clusterr.jpg.jpeg)
-
-### 7.4 Network Selection / VPC Configuration
-**Evidence**  
-![Specify network in EKS](../specify%20network%20in%20eks.jpg.jpeg)
-
-### 7.5 Kubernetes Validation Commands
-Cluster connectivity and workloads are validated using kubectl.
-
-**Command(s)**
-```bash
-kubectl get nodes
-kubectl get pods -A
-kubectl get svc -A
-```
-
----
-
-## 8. Monitoring Verification (Prometheus and Grafana)
-
-### 8.1 Prometheus Access and Visibility
 **Evidence**  
 ![Prometheus](../prometheus.jpg.jpeg)
 
-### 8.2 Prometheus Query Validation
+### 7.2 Prometheus Query Validation
+Prometheus successfully queries the application/metrics.
+
 **Evidence**  
 ![Prometheus query success](../prometheus%20successfull%20querried%20the%20api.jpg.jpeg)
 
-### 8.3 Grafana Dashboard Validation
+### 7.3 Grafana Dashboard Validation
+Grafana dashboards display metrics for the environment.
+
 **Evidence**  
 ![Grafana dashboard metrics](../grafana%20dahsboard%20metric.jpg.jpeg)
 
-### 8.4 Monitoring Working Evidence
+### 7.4 Monitoring Working Evidence
+Additional monitoring evidence is captured.
+
 **Evidence**  
 ![Monitoring work](../monitoring%20work.jpg.jpeg)  
 ![Monitoring working](../monitoring%20working.jpg.jpeg)
 
-### 8.5 Dashboard Visualizations
+### 7.5 Dashboard Visualizations
+Charts/visualizations used for reporting are captured.
+
 **Evidence**  
 ![Histogram monitor](../histogram%20monitor.jpg.jpeg)  
 ![Bar chart](../bar%20chart%20rep.jpg.jpeg)
@@ -252,8 +242,7 @@ kubectl get svc -A
 
 ## Output Summary
 - EC2 provisioning + Docker installation evidence captured.
+- Multi-service application containerized and validated.
 - Jenkins CI evidence captured.
-- Multi-service application validated locally on the specified ports.
 - Changes committed and pushed to GitHub.
-- Kubernetes cluster created and validated.
 - Monitoring verified with Prometheus and Grafana dashboards.
